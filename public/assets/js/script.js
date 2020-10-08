@@ -13,3 +13,11 @@ function swalError(message) {
         icon: 'error'
     });
 }
+
+function swalSuccess(message) {
+    return swal({
+        title: 'Success',
+        text: message,
+        icon: 'success'
+    });
+}

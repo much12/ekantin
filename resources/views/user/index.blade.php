@@ -16,7 +16,7 @@
                     Data User
 
                     <div class="float-right">
-                        <button type="button" class="btn btn-custom-color btn-sm">
+                        <button type="button" class="btn btn-custom-color btn-sm" onclick="addUser()">
                             <i class="fa fa-plus"></i>
                             Tambah User
                         </button>
@@ -48,6 +48,13 @@
                                     <td>{{ $value->balance }}</td>
                                     <td>{{ $value->role->roleName }}</td>
                                     <td>
+                                        <button type="button" class="btn btn-primary btn-sm btn-flat" onclick="editUser('{{ $value->userId }}')">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-danger btn-sm btn-flat" onclick="deleteUser('{{ $value->userId }}')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
                                     </td>
                                 </tr>
                                 @endif
@@ -66,5 +73,80 @@
     $(document).ready(function() {
         $('#table-users').DataTable();
     });
+
+    function addUser() {
+        $.ajax({
+            url: "{{ url()->current() . '/add' }}",
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.RESULT == 'OK') {
+                    $('#ModalGlobal').html(response.CONTENT);
+                    $('#ModalGlobal').modal('show');
+                } else {
+                    swalError(response.MESSAGE);
+                }
+            }
+        }).fail(function() {
+            swalError();
+        });
+    }
+
+    function editUser(userId) {
+        $.ajax({
+            url: "{{ url()->current() . '/edit' }}",
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                _token: '{{ csrf_token() }}',
+                userId: userId
+            },
+            success: function(response) {
+                if (response.RESULT == 'OK') {
+                    $('#ModalGlobal').html(response.CONTENT);
+                    $('#ModalGlobal').modal('show');
+                } else {
+                    swalError(response.MESSAGE);
+                }
+            }
+        }).fail(function() {
+            swalError();
+        });
+    }
+
+    function deleteUser(userId) {
+        swal({
+            title: 'Apakah anda yakin?',
+            text: 'Apakah anda yakin ingin menghapus user tersebut?',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "{{ url()->current() . '/delete' }}",
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        userId: userId
+                    },
+                    success: function(response) {
+                        if (response.RESULT == 'OK') {
+                            swalSuccess(response.MESSAGE);
+
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            swalMessage(response.MESSAGE);
+                        }
+                    }
+                }).fail(function() {
+                    swalError();
+                });
+            }
+        });
+    }
 </script>
 @endsection

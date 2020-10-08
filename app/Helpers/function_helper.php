@@ -24,3 +24,8 @@ function getCurrentIdUser()
 {
     return Session::get('userId');
 }
+
+function isAdmin()
+{
+    return (Session::get('role') == 'Admin');
+}
