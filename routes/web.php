@@ -29,4 +29,10 @@ Route::group(['middleware' => ['CekSession']], function () {
     Route::post('user/edit', 'UserController@modal_user_edit');
     Route::post('user/edit/process', 'UserController@process_edit_user');
     Route::post('user/delete', 'UserController@process_delete_user');
+    Route::get('/etalase', 'BarangController@index')->name('etalase');
+    Route::get('/addBarang', 'BarangController@create')->name('createBarang');
+    Route::post('/addBarang', 'BarangController@store')->name('storeBarang');
+    Route::get('barang/{id}/edit', 'BarangController@edit')->name('editBarang');
+    Route::put('barang/{id}/edit', 'BarangController@update')->name('updateBarang');
+    Route::delete('barang/{id}/delete','BarangController@destroy')->name('deleteBarang');
 });
