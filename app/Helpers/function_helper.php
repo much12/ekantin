@@ -29,3 +29,7 @@ function isAdmin()
 {
     return (Session::get('role') == 'Admin');
 }
+
+function isSeller(){
+    return (Session::get('role') == "Penjual");
+}
