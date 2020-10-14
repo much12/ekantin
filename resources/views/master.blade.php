@@ -85,14 +85,14 @@
 
                     @if(session('roleId') == 2)
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('etalase') }}">
                             <i class="fa fa-cube"></i>
                             Etalase
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('createBarang') }}">
                             <i class="fa fa-shopping-cart"></i>
                             Tambah Produk
                         </a>
@@ -120,6 +120,7 @@
     <script src="{{ asset('assets/plugins/datatables.net/1.10.22/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables.net/1.10.22/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
+    @yield('script')
 </body>
 
 </html>
