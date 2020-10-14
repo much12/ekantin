@@ -26,6 +26,7 @@ CREATE TABLE `ms_barang` (
   `harga` double(8,2) NOT NULL,
   `userId` int(11) NOT NULL,
   `stock` int(4) NOT NULL,
+  `gambar` varchar(255) NOT NULL,
   `keterangan` text,
   PRIMARY KEY (`idBarang`),
   KEY `userId` (`userId`),
